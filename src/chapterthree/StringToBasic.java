@@ -7,6 +7,6 @@ public class StringToBasic {
 
         String转基本数据类型需要使用对应基本类型的包装类的parse方法
          */
-        
+
     }
 }
