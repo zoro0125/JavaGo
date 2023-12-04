@@ -1,5 +1,7 @@
 package chapterseven;
 
+import java.util.Random;
+
 public class Exercise {
     public static void main(String[] args) {
 
@@ -9,6 +11,42 @@ public class Exercise {
         System.out.println(a.max(nums));
         A02 a2 = new A02();
         System.out.println(a2.find(strs, "tom"));
+
+        Circle c = new Circle();
+        PassObject ps = new PassObject();
+        ps.printArea(c, 5);
+        System.out.println("radius=" + c.radius);
+    }
+}
+class Tom {
+    public int tomNum;
+    public int comNum;
+
+    public int genComNum() {
+        Random ran = new Random();
+        comNum = ran.nextInt(3);
+    }
+}
+class Circle {
+    public double radius;
+
+    Circle(double radius) {
+        this.radius = radius;
+    }
+    Circle() {
+
+    }
+    public double findArea() {
+        return Math.PI * radius * radius;
+    }
+}
+class PassObject {
+    public void printArea(Circle c, int times) {
+        System.out.println("Radius\tArea");
+        for (int i = 1; i <= times; i++) {
+            c.radius = i;
+            System.out.println(i + "\t\t" + c.findArea());
+        }
     }
 }
 class A01 {
@@ -39,11 +77,11 @@ class A02 {
 
 class Book {
     int price;
-    public void updatePrice(Book book) {
-        if (book.price > 150){
-            book.price = 150;
-        } else if (book.price > 100) {
-            book.price = 100;
+    public void updatePrice() {
+        if (this.price > 150){
+            this.price = 150;
+        } else if (this.price > 100) {
+            this.price = 100;
         }
     }
 }
