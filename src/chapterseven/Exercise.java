@@ -1,30 +1,50 @@
 package chapterseven;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Exercise {
     public static void main(String[] args) {
 
-        double[] nums = {1.25};
-        String[] strs = {"tom", "jery", "viper"};
-        A01 a = new A01();
-        System.out.println(a.max(nums));
-        A02 a2 = new A02();
-        System.out.println(a2.find(strs, "tom"));
-
-        Circle c = new Circle();
-        PassObject ps = new PassObject();
-        ps.printArea(c, 5);
-        System.out.println("radius=" + c.radius);
+        Tom tom = new Tom();
+        tom.count = 3;
+        for (int i = 0; i < tom.count; i++) {
+            System.out.println("请出拳：");
+            Scanner scanner = new Scanner(System.in);
+            tom.setTomNum(scanner.nextInt());
+            tom.setComNum();
+            if (tom.comNum == 0) {
+                System.out.println("电脑出石头");
+            } else if (tom.comNum == 1) {
+                System.out.println("电脑出剪刀");
+            } else {
+                System.out.println("电脑出布");
+            }
+            tom.compare();
+        }
     }
 }
 class Tom {
     public int tomNum;
     public int comNum;
+    public int count = 1;
 
-    public int genComNum() {
+
+    public void setComNum() {
         Random ran = new Random();
         comNum = ran.nextInt(3);
+    }
+    public void setTomNum(int tomNum) {
+        this.tomNum = tomNum;
+    }
+    public void compare() {
+        if ((tomNum == 0 && comNum == 1) || (tomNum == 1 && comNum == 2) ||(tomNum == 2 && comNum == 0)) {
+            System.out.println("你赢了");
+        } else if (tomNum == comNum) {
+            System.out.println("平了");
+        } else {
+            System.out.println("你输了");
+        }
     }
 }
 class Circle {
