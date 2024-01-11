@@ -1,8 +1,6 @@
 package com.cyl.chapter13.stringbuffer;
 
 
-import java.util.Arrays;
-
 /**
  * @author cyl
  * @version 1.0
@@ -20,6 +18,6 @@ public class StringBuffer01 {
         System.out.println(stringBuffer3);
         String str2 = stringBuffer3.toString();
         String string = new String(stringBuffer3);
-        Arrays.sort();
+//        Arrays.sort();
     }
 }
