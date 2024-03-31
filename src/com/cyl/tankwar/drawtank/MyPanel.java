@@ -11,7 +11,7 @@ import java.util.Vector;
  * @version 1.0
  */
 
-public class MyPanel extends JPanel implements KeyListener {
+public class MyPanel extends JPanel implements KeyListener, Runnable{
 
     MyTank myTank = null;
     Vector<EnemyTank> enemies = new Vector<>();
@@ -26,9 +26,14 @@ public class MyPanel extends JPanel implements KeyListener {
             drawTank(enemy.getX(), enemy.getY(), g, 1, 1);
         }
 
+        if (myTank.bullet != null && myTank.bullet.isLive) {
+            drawBullet(myTank.bullet.x, myTank.bullet.y, g);
+
+        }
+
     }
     public MyPanel() {
-        myTank = new MyTank(100, 100, 5);
+        myTank = new MyTank(100, 200, 5);
         for (int i = 0; i < enemySize; i++) {
             enemies.add(new EnemyTank(100*(i + 1), 100));
         }
@@ -74,6 +79,10 @@ public class MyPanel extends JPanel implements KeyListener {
         }
 
     }
+    public void drawBullet(int x, int y, Graphics g) {
+        g.draw3DRect(x, y, 2, 2, false);
+
+    }
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
@@ -95,11 +104,28 @@ public class MyPanel extends JPanel implements KeyListener {
             myTank.setDirect(3);
             myTank.moveLeft();
         }
+
+        if (keyEvent.getKeyCode() == KeyEvent.VK_J) {
+            myTank.shut();
+        }
+
         this.repaint();
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
 
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            this.repaint();
+        }
     }
 }
