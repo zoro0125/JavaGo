@@ -10,7 +10,9 @@ public class Tank {
     private int x;
     private int y;
     private int direct;
-    private int speed;
+    private int speed = 3;
+
+    boolean isLive = true;
 
 
     public int getDirect() {
@@ -30,10 +32,10 @@ public class Tank {
     }
 
 
-    public Tank(int x, int y, int speed) {
+    public Tank(int x, int y, int direct) {
         this.x = x;
         this.y = y;
-        this.speed = speed;
+        this.direct = direct;
     }
 
     public int getX() {

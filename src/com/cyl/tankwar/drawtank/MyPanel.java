@@ -19,23 +19,38 @@ public class MyPanel extends JPanel implements KeyListener, Runnable{
 
     @Override
     public void paint(Graphics g) {
+
         super.paint(g);
+
         g.fillRect(0, 0, 1000, 1000);
         drawTank(myTank.getX(), myTank.getY(), g, myTank.getDirect(), 0);
         for (EnemyTank enemy : enemies) {
-            drawTank(enemy.getX(), enemy.getY(), g, 1, 1);
+            if (enemy.isLive) {
+                drawTank(enemy.getX(), enemy.getY(), g, 1, 1);
+                for (Bullet bullet : enemy.bullets) {
+                    if (bullet.isLive) {
+                        drawBullet(bullet.x, bullet.y, g);
+                    } else {
+                        enemy.bullets.remove(bullet);
+                    }
+                }
+            }
+
         }
 
         if (myTank.bullet != null && myTank.bullet.isLive) {
             drawBullet(myTank.bullet.x, myTank.bullet.y, g);
-
         }
 
     }
     public MyPanel() {
-        myTank = new MyTank(100, 200, 5);
+        myTank = new MyTank(100, 200, 0);
         for (int i = 0; i < enemySize; i++) {
-            enemies.add(new EnemyTank(100*(i + 1), 100));
+            EnemyTank enemyTank = new EnemyTank(100 * (i + 1), 100, 1);
+            Bullet bullet = new Bullet(enemyTank.getX() + 20, enemyTank.getY() + 60, enemyTank.getDirect());
+            enemyTank.bullets.add(bullet);
+            new Thread(bullet).start();
+            enemies.add(enemyTank);
         }
     }
     public void drawTank(int x, int y, Graphics g, int direct, int type) {
@@ -125,7 +140,35 @@ public class MyPanel extends JPanel implements KeyListener, Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+
+            if (myTank.bullet != null && myTank.bullet.isLive) {
+                for (EnemyTank enemyTank : enemies) {
+                    hitTank(myTank.bullet, enemyTank);
+                }
+            }
+
             this.repaint();
         }
+    }
+
+    public void hitTank(Bullet bullet, EnemyTank enemyTank) {
+        switch (enemyTank.getDirect()) {
+            case 0:
+            case 1:
+                if ( (bullet.x > enemyTank.getX() && bullet.x < enemyTank.getX() + 40 && bullet.y > enemyTank.getY() && bullet.y < enemyTank.getY() + 60) ) {
+                    bullet.isLive = false;
+                    enemyTank.isLive = false;
+                }
+                break;
+            case 2:
+            case 3:
+                if ( (bullet.x > enemyTank.getX() && bullet.x < enemyTank.getX() + 60 && bullet.y > enemyTank.getY() && bullet.y < enemyTank.getY() + 40) ) {
+                    bullet.isLive = false;
+                    enemyTank.isLive = false;
+                }
+                break;
+
+        }
+
     }
 }

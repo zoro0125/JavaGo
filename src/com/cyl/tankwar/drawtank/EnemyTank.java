@@ -1,5 +1,7 @@
 package com.cyl.tankwar.drawtank;
 
+import java.util.Vector;
+
 /**
  * @author cyl
  * @version 1.0
@@ -7,8 +9,10 @@ package com.cyl.tankwar.drawtank;
 
 public class EnemyTank extends Tank{
 
-    public EnemyTank(int x, int y, int speed) {
-        super(x, y, speed);
+    Vector<Bullet> bullets = new Vector<>();
+
+    public EnemyTank(int x, int y, int direct) {
+        super(x, y, direct);
     }
 
     public EnemyTank(int x, int y) {
